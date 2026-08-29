@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SIH26135 — Employment &amp; Skill Gap Tracking</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% import "macros.html" as m %}
+<div class="app">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar">
+    <a href="{{ url_for('dashboard') }}" class="logo">
+      <span class="logo-mark">{{ m.icon('logomark', 20) }}</span>
+      <span class="logo-word">SkillTrack</span>
+    </a>
+    <nav id="nav">
+      {% for item in nav_items %}
+      <a href="{{ url_for(item.page) }}" data-page="{{ item.page }}" class="{{ 'active' if active_page == item.page else '' }}">
+        {{ m.icon(item.icon) }}<span>{{ item.label }}</span>
+      </a>
+      {% endfor %}
+    </nav>
+    <div class="bottom">
+      {% for item in bottom_nav_items %}
+      <a href="{{ url_for(item.page) }}" class="{{ 'active' if active_page == item.page else '' }}">
+        {{ m.icon(item.icon) }}<span>{{ item.label }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </aside>
+
+  <main>
+    <header>
+      <button class="hamb" id="hamb" aria-label="Toggle menu">{{ m.icon('menu', 22) }}</button>
+      <h1>SIH26135 — Employment &amp; Skill Gap Tracking</h1>
+      <div class="head-right">
+        {{ m.icon('bell') }}
+        <div class="avatar-sm"></div>
+        <b>{{ user.name }}</b>
+      </div>
+    </header>
+    <section id="content">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-stack">
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </section>
+  </main>
+</div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

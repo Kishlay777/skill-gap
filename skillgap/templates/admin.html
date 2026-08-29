@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block content %}
+<div class="page">
+  <div class="title-row">
+    <div>
+      <h2>Admin</h2>
+      <div class="muted">System overview and platform management.</div>
+    </div>
+  </div>
+
+  <div class="grid grid4">
+    {% for k in kpis %}{{ m.kpi_card(k) }}{% endfor %}
+  </div>
+  <br>
+
+  <div class="grid grid2">
+    <div class="card">
+      <h3>Quick Management</h3>
+      {% for item in management %}
+      <div class="list-row"><span>{{ item }}</span><button class="btn">Open</button></div>
+      {% endfor %}
+    </div>
+    <div class="card">
+      <h3>System Alerts</h3>
+      {% for a in alerts %}<div class="notice">{{ a }}</div>{% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

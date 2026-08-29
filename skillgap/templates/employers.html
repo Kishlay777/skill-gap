@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page">
+  <div class="title-row">
+    <div>
+      <h2>Employers</h2>
+      <div class="muted">Connect candidate skills with employer requirements.</div>
+    </div>
+    <button class="btn primary">Add Employer</button>
+  </div>
+
+  <div class="card">
+    <div class="table-wrap">
+    <table class="table">
+      <tr><th>Employer</th><th>Industry</th><th>Open Roles</th><th>Top Skills</th><th>Status</th></tr>
+      {% for e in employers %}
+      <tr>
+        <td><b>{{ e.name }}</b></td>
+        <td>{{ e.industry }}</td>
+        <td>{{ e.roles }}</td>
+        <td>{{ e.skills }}</td>
+        <td>{{ e.status }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block content %}
+<div class="page">
+  <div class="title-row">
+    <div>
+      <h2>My Skills</h2>
+      <div class="muted">Add, assess and track your technical and soft skills.</div>
+    </div>
+    <button class="btn primary" type="button" onclick="openModal('addSkillModal')">{{ m.icon('plus', 15) }} Add Skill</button>
+  </div>
+
+  <div class="card">
+    {% if skills %}
+      {% for s in skills %}
+      <div class="skill-card">
+        <div>
+          <b>{{ s.name }}</b>
+          <div class="muted small">{{ s.category }} Skill</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="score">{{ s.score }}/5</span>
+          <button class="btn" type="button"
+                  onclick="openAssessModal('{{ s.name|e }}', {{ s.score }})">Assess</button>
+          <form method="POST" action="{{ url_for('delete_skill') }}" style="display:inline"
+                onsubmit="return confirm('Remove {{ s.name|e }} from your skills?')">
+            <input type="hidden" name="name" value="{{ s.name }}">
+            <button class="btn icon-btn" type="submit" aria-label="Remove {{ s.name }}">{{ m.icon('trash', 15) }}</button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty">No skills yet — click "+ Add Skill" to add your first one.</div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Add Skill modal -->
+<div class="modal-overlay" id="addSkillModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Add a Skill</h3>
+      <button class="btn icon-btn" type="button" onclick="closeModal('addSkillModal')">{{ m.icon('x', 16) }}</button>
+    </div>
+    <form method="POST" action="{{ url_for('add_skill') }}">
+      <div class="field">
+        <label>Skill Name</label>
+        <input class="input" type="text" name="name" placeholder="e.g. React" required autofocus>
+      </div>
+      <div class="field">
+        <label>Category</label>
+        <select class="input" name="category">
+          <option value="Technical">Technical</option>
+          <option value="Professional">Professional</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Your Level (1–5)</label>
+        <input class="input" type="number" name="score" min="1" max="5" value="3" required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn" onclick="closeModal('addSkillModal')">Cancel</button>
+        <button type="submit" class="btn primary">Add Skill</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Assess / update skill modal -->
+<div class="modal-overlay" id="assessModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Assess <span id="assessSkillName"></span></h3>
+      <button class="btn icon-btn" type="button" onclick="closeModal('assessModal')">{{ m.icon('x', 16) }}</button>
+    </div>
+    <form method="POST" action="{{ url_for('update_skill') }}">
+      <input type="hidden" name="name" id="assessSkillNameInput">
+      <div class="field">
+        <label>New Level (1–5)</label>
+        <input class="input" type="number" name="score" id="assessScoreInput" min="1" max="5" required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn" onclick="closeModal('assessModal')">Cancel</button>
+        <button type="submit" class="btn primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

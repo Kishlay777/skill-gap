@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block content %}
+<div class="page">
+  <div class="title-row">
+    <div>
+      <h2>Job Recommendations</h2>
+      <div class="muted">Jobs ranked by your skill match and career goals.</div>
+    </div>
+    <div class="search-box">
+      {{ m.icon('search', 16) }}
+      <input type="text" id="jobSearch" placeholder="Search jobs, companies, skills…">
+    </div>
+  </div>
+
+  <div class="card">
+    {% for j in jobs %}<div data-job-card>{{ m.job_card(j) }}</div>{% endfor %}
+  </div>
+</div>
+{% endblock %}

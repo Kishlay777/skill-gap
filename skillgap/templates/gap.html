@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page">
+  <div class="title-row">
+    <div>
+      <h2>Skill Gap Analysis</h2>
+      <div class="muted">Compare your current skills with market and job requirements.</div>
+    </div>
+    <button class="btn primary">Run Assessment</button>
+  </div>
+
+  <div class="hero">
+    <div class="statline">
+      {% for s in stats %}
+      <div><div class="muted">{{ s.label }}</div><strong>{{ s.value }}</strong></div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Priority Skill Gaps</h3>
+    <div class="table-wrap">
+    <table class="table">
+      <tr><th>Skill</th><th>Your Level</th><th>Required</th><th>Gap</th><th>Priority</th></tr>
+      {% for r in table %}
+      <tr>
+        <td>{{ r.skill }}</td>
+        <td>{{ r.your }}</td>
+        <td>{{ r.required }}</td>
+        <td><span class="gap-tag">{{ r.gap }}</span></td>
+        <td>{{ r.priority }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

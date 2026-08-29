@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block content %}
+<div class="page">
+  <div class="title-row">
+    <div>
+      <h2>Reports &amp; Insights</h2>
+      <div class="muted">Track employment trends, skills demand and your progress.</div>
+    </div>
+    <button class="btn" type="button" onclick="window.print()">Export Report</button>
+  </div>
+
+  <div class="grid grid4">
+    {% for k in kpis %}{{ m.kpi_card(k) }}{% endfor %}
+  </div>
+  <br>
+
+  <div class="grid grid2">
+    <div class="card">
+      <h3>Career Progress</h3>
+      <div class="empty">Chart placeholder — skill growth over time</div>
+    </div>
+    <div class="card">
+      <h3>Market Insights</h3>
+      {% for i in insights %}<div class="notice">{{ i }}</div>{% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

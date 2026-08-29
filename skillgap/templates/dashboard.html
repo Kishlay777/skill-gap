@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block content %}
+<div class="page">
+  <div class="title-row">
+    <div>
+      <h2>Welcome, {{ user.name.split(' ')[0] }}!</h2>
+      <div class="muted">Track your skills, discover gaps, and grow your career.</div>
+    </div>
+    <div class="filters">
+      <select class="select">
+        <option>Location: All</option>
+        <option>Delhi, India</option>
+        <option>Bangalore, India</option>
+        <option>Mumbai, India</option>
+        <option>Hyderabad, India</option>
+      </select>
+      <select class="select">
+        <option>Industry: All</option>
+        <option>Analytics</option>
+        <option>IT Services</option>
+        <option>AI &amp; Data</option>
+        <option>Software</option>
+      </select>
+      <input class="select" type="date">
+    </div>
+  </div>
+
+  <div class="grid grid4">
+    {% for k in kpis %}{{ m.kpi_card(k) }}{% endfor %}
+  </div>
+  <br>
+
+  <div class="grid grid2">
+    <div class="card">
+      <div class="card-head"><h3>Skill Gap Overview</h3><a class="btn" href="{{ url_for('gap') }}">View Details</a></div>
+      {% for s in skill_gap_overview %}{{ m.skill_row(s) }}{% endfor %}
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Top Job Recommendations</h3><a class="btn" href="{{ url_for('jobs') }}">View All</a></div>
+      {% for j in top_jobs %}{{ m.job_card(j) }}{% endfor %}
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Recommended Courses</h3><a class="btn" href="{{ url_for('training') }}">View All</a></div>
+      {% for c in recommended_courses %}{{ m.course_card(c) }}{% endfor %}
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h3>Skills Distribution</h3></div>
+      <div class="chart"><div class="donut"></div></div>
+      <div class="statline">
+        {% for d in skills_distribution %}<span>{{ d.label }} <strong>{{ d.value }}%</strong></span>{% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

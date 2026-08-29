@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page">
+  <div class="title-row">
+    <div>
+      <h2>Help &amp; Support</h2>
+      <div class="muted">Get help using the Employment &amp; Skill Gap Tracking platform.</div>
+    </div>
+  </div>
+
+  <div class="grid grid2">
+    <div class="card">
+      <h3>Frequently Asked Questions</h3>
+      {% for f in faqs %}
+      <div class="list-row faq-row">
+        <div class="faq-q"><span>{{ f.q }}</span><b class="faq-toggle">+</b></div>
+        <div class="faq-a">{{ f.a }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="card">
+      <h3>Contact Support</h3>
+      <form method="POST" action="{{ url_for('support_submit') }}">
+        <div class="field"><label>Subject</label><input class="input" name="subject" placeholder="Enter subject"></div>
+        <div class="field"><label>Message</label><textarea class="input" name="message" rows="5" placeholder="Describe your issue"></textarea></div>
+        <button class="btn primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

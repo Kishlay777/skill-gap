@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% import "macros.html" as m %}
+{% block content %}
+<div class="page">
+  <div class="title-row">
+    <div>
+      <h2>Training &amp; Courses</h2>
+      <div class="muted">Recommended learning paths based on your skill gaps.</div>
+    </div>
+    <button class="btn primary">Browse Courses</button>
+  </div>
+
+  <div class="grid grid2">
+    <div class="card">
+      {% for c in courses %}{{ m.course_card(c) }}{% endfor %}
+    </div>
+    <div class="card">
+      <h3>Learning Path</h3>
+      {% for p in learning_path %}
+      <div class="list-row"><span>{{ p.step }}. {{ p.name }}</span><b>{{ p.percent }}</b></div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
